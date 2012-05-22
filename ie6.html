@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <script src='Scripts/json2-min.js' type="text/javascript"></script>
+  <script src='Scripts/jquery-1.6.2.min.js' type="text/javascript"></script>
+  <script src='Scripts/knockout-2.0.0.js' type="text/javascript"></script>
+  <script src='Scripts/knockout.mapping-min.js'  type="text/javascript"></script>
+  <script  type="text/javascript" language="javascript" >
+    var fieldObj = {"Fsn":{"County":1,"ElDiv":82,"MapCode":8,"FieldNo":10,"Suffix":null},"LandType":1,"LandStatus":1,"LandArea":"0.96","Usages":[{"UsageId":7246073,"UsageTypeId":431,"UsageArea":"0.96","SfpArea":"0.96","LfacaArea":"0.96"}]};
+   
+    var listOfUsages= [{"Key":422,"Value":"AR1"},{"Key":424,"Value":"AR2"},{"Key":425,"Value":"AR3"},{"Key":426,"Value":"AR4"},{"Key":427,"Value":"AR5"},{"Key":428,"Value":"EC1"},{"Key":429,"Value":"EC2"},{"Key":430,"Value":"EC3"},{"Key":431,"Value":"FR1"},{"Key":434,"Value":"FR2"},{"Key":435,"Value":"HT1"},{"Key":436,"Value":"HT2"},{"Key":437,"Value":"HT3"},{"Key":438,"Value":"HT4"},{"Key":439,"Value":"OT1"},{"Key":440,"Value":"OT10"},{"Key":441,"Value":"OT11"},{"Key":442,"Value":"OT12"},{"Key":443,"Value":"OT13"},{"Key":444,"Value":"OT14"},{"Key":445,"Value":"OT15"},{"Key":446,"Value":"OT16"},{"Key":447,"Value":"OT17"},{"Key":448,"Value":"OT2"},{"Key":449,"Value":"OT3"},{"Key":450,"Value":"OT4"},{"Key":451,"Value":"OT5"},{"Key":452,"Value":"OT6"},{"Key":453,"Value":"OT7"},{"Key":455,"Value":"OT9"},{"Key":456,"Value":"PC1"},{"Key":457,"Value":"SA1"}];
+    
+    //Knockout JS View Model
+    function FieldModel(field, staticUsages){
+    var self = this;
+    
+     ko.mapping.fromJS(field, {}, this);   
+   
+     this.availableUsages = ko.mapping.fromJS(staticUsages);
+      
+    }
+
+
+    $(document).ready(function () {
+    
+        //Init the new model
+       var viewModel =
+            new FieldModel(fieldObj,listOfUsages);
+
+        //Apply Bindings to HTML Page
+        ko.applyBindings(viewModel);
+
+    });
+   
+</script>
+ 
+</head>
+
+
+<body>
+
+<table>
+<thead>
+        <tr>
+            <th style="width: 120px">
+               Code
+            </th>
+           
+        </tr>
+    </thead>
+<tbody data-bind="foreach: Usages">
+        <tr>
+            <td>
+               
+                <select data-bind="options: $root.availableUsages, title: 'Value', optionsText: 'Value', optionsValue: 'Key', value: $data.UsageTypeId, optionsCaption: 'Please Select'" >
+                </select>
+               
+             
+            </td>
+         
+        </tr>
+    </tbody>
+</table>
+
+</body>
+
+</html>
